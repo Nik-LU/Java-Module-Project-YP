@@ -4,13 +4,20 @@ import java.util.Scanner;
 
 
 class Racing {
-    static String leader = " "; // Лидер
-    static int dist = 0; // Дист.
+    String leader; // Лидер
+    int dist; // Дист.
+    final int time = 24;
+
+    Racing (String leader, int dist)
+    {
+        this.leader = leader;
+        this.dist = dist;
+    }
 
     //Метод для определения лидера
     void searchLead(String nameAuto, int speedAuto) {
-        if (dist < (24 * speedAuto)) {
-            dist = 24 * speedAuto;
+        if (dist < (time * speedAuto)) {
+            dist = time * speedAuto;
             leader = nameAuto;
         }
     }
@@ -26,19 +33,29 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        Racing rec = new Racing();
+        Racing rec = new Racing("",0);
+
 
         for (int i = 1; i <= 3; i++) {
+
             System.out.println("Введите название машины №" + i + ":");
             String name = scanner.next();
-            int speed = 0;
+            int speed;
+
             while (true) {
                 System.out.println("Введите скорость машины №" + i + ":");
-                speed = scanner.nextInt();
-                if (speed >= 0 && speed <= 250) {
-                    break;
-                } else {
+                if (scanner.hasNextInt()){
+                    speed = scanner.nextInt();
+                    scanner.nextLine();
+                    if (speed >= 0 && speed <= 250  ) {
+                        break;
+                    } else {
+                        System.out.println("Некорректная скорость. Повторите ввод.");
+                    }
+                }
+                else {
                     System.out.println("Некорректная скорость. Повторите ввод.");
+                    scanner.nextLine();
                 }
             }
             // конец проверки условий и ввода данных
